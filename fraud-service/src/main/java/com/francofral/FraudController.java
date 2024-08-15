@@ -1,5 +1,6 @@
 package com.francofral;
 
+import com.francofral.clients.fraud.FraudCheckResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
