@@ -2,13 +2,19 @@ package com.francofral;
 
 import com.francofral.clients.fraud.FraudCheckResponse;
 import com.francofral.clients.fraud.FraudClient;
+import com.francofral.clients.notification.NotificationClient;
+import com.francofral.clients.notification.NotificationRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import static java.util.Objects.isNull;
 
 @Service
-public record CustomerService(CustomerRepository customerRepository, RestTemplate restTemplate, FraudClient fraudClient) {
+public record CustomerService(
+        CustomerRepository customerRepository,
+        RestTemplate restTemplate,
+        FraudClient fraudClient,
+        NotificationClient notificationClient) {
 
     public void registerCustomer(CustomerRegistrationRequest customerRequest) {
         Customer customer = Customer.builder()
@@ -34,6 +40,14 @@ public record CustomerService(CustomerRepository customerRepository, RestTemplat
             throw new IllegalStateException("Fraudster detected");
         }
 
-        // TODO: send notification
+        // Send notification
+        // TODO: make it async. i.e add to queue
+        notificationClient.sendNotification(
+            new NotificationRequest(
+                customer.getId(),
+                customer.getEmail(),
+                String.format("Hi %s, welcome to FrancoFral demos...", customer.getFirstName())
+            )
+        );
     }
 }
