@@ -21,7 +21,7 @@ public record CustomerService(CustomerRepository customerRepository, RestTemplat
 
         // Check if email not taken
         FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
-                "http://localhost:9191/api/v1/fraud-check/{customerId}",
+                "http://FRAUD-SERVICE/api/v1/fraud-check/{customerId}",
                 FraudCheckResponse.class,
                 customer.getId());
 
