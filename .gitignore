@@ -1,3 +1,8 @@
+**/target/
+**/.idea/
+**/node_modules
+**/*.iml
+
 # Compiled class file
 *.class
 
