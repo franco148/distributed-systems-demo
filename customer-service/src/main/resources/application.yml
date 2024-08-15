@@ -1,0 +1,18 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: customer-service
+  datasource:
+    password: password01!
+    username: fullstack
+    url: jdbc:postgresql://172.18.0.2:5432/customer-svr-db
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
