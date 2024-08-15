@@ -1,0 +1,18 @@
+server:
+  port: 9191
+
+spring:
+  application:
+    name: fraud-service
+  datasource:
+    password: password01!
+    username: fullstack
+    url: jdbc:postgresql://172.18.0.2:5432/fraud-svr-db
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
