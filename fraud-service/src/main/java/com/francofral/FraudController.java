@@ -5,7 +5,6 @@ import io.micrometer.observation.annotation.Observed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-@Observed
 @RestController
 @RequestMapping("api/v1/fraud-check")
 @Slf4j
@@ -17,6 +16,11 @@ public class FraudController {
         this.service = service;
     }
 
+    @Observed(
+        name = "user.name",
+        contextualName = "register-check_fraud",
+        lowCardinalityKeyValues = {"userType", "userType2"}
+    )
     @GetMapping("{customerId}")
     public FraudCheckResponse isFraudster(@PathVariable("customerId") Integer customerId) {
         boolean isFraudulentCustomer = service.isFraudulentCustomer(customerId);
