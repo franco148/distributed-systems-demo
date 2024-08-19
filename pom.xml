@@ -19,6 +19,7 @@
     <module>demo-clients</module>
     <module>notification-service</module>
     <module>api-gateway-service</module>
+    <module>amqp-demo</module>
   </modules>
 
   <properties>

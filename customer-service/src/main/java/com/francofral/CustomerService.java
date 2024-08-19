@@ -14,7 +14,8 @@ public record CustomerService(
         CustomerRepository customerRepository,
         RestTemplate restTemplate,
         FraudClient fraudClient,
-        NotificationClient notificationClient) {
+        NotificationClient notificationClient,
+        RabbitMQMessageProducer rabbitMQMessageProducer) {
 
     public void registerCustomer(CustomerRegistrationRequest customerRequest) {
         Customer customer = Customer.builder()
@@ -42,12 +43,11 @@ public record CustomerService(
 
         // Send notification
         // TODO: make it async. i.e add to queue
-        notificationClient.sendNotification(
-            new NotificationRequest(
+        NotificationRequest notificationRequest = new NotificationRequest(
                 customer.getId(),
                 customer.getEmail(),
                 String.format("Hi %s, welcome to FrancoFral demos...", customer.getFirstName())
-            )
         );
+        rabbitMQMessageProducer.publish(notificationRequest, "", "");
     }
 }
