@@ -1,0 +1,43 @@
+server:
+  port: 9393
+
+spring:
+  application:
+    name: api-gateway-service
+
+  cloud:
+    gateway:
+      routes:
+        - id: customer-service
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=/api/v1/customers/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+  tracing:
+    sampling:
+      probability: 1.0  # Sample all requests
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
+
+logging:
+  pattern:
+    file: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"

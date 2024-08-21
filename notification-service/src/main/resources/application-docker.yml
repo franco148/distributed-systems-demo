@@ -1,0 +1,59 @@
+server:
+  port: 9292
+
+spring:
+  application:
+    name: notification-service
+  datasource:
+    password: password01!
+    username: fullstack
+    url: jdbc:postgresql://postgres:5432/notification-svr-db
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+  rabbitmq:
+    exchanges:
+      internal: internal.exchange
+    queue:
+      notification: notification.queue
+    routing-keys:
+      internal-notification: internal.notification.routing-key
+    addresses: rabbitmq:5672
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+  tracing:
+    sampling:
+      probability: 1.0  # Sample all requests
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
+
+logging:
+  pattern:
+    file: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+
+
