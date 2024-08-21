@@ -29,6 +29,7 @@
     <spring.boot.dependencies.version>3.3.2</spring.boot.dependencies.version>
     <spring.boot.maven.plugin.version>3.3.2</spring.boot.maven.plugin.version>
     <spring-cloud.version>2023.0.3</spring-cloud.version>
+    <image>franco148/microservice-demo-${project.artifactId}:${project.version}</image>
   </properties>
 
   <dependencyManagement>
@@ -112,6 +113,31 @@
             <execution>
               <goals>
                 <goal>repackage</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>com.google.cloud.tools</groupId>
+          <artifactId>jib-maven-plugin</artifactId>
+          <version>3.4.3</version>
+          <configuration>
+            <from>
+              <image>eclipse-temurin:21</image>
+            </from>
+            <to>
+              <tags>
+                <tag>latest</tag>
+              </tags>
+            </to>
+          </configuration>
+
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>build</goal>
               </goals>
             </execution>
           </executions>
