@@ -21,6 +21,7 @@ Example: `mvn clean package -P build-docker-image`
 - Check logs: `kubectl logs <pod-name>`
 - SSH a pod: `minikube ssh`
 - In case we need to connect to a postgres pod: `kubectl exec -it <pod-name> -- psql -U <username>`. Then we can create more databases.
+- For enabling pod url instead of the load balancer: `minikube tunnel`
 
 Use the following commands to access both RabbitMQ and Zipkin
 - minikube service --url rabbitmq
