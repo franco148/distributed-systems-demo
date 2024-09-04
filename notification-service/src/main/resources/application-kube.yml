@@ -1,13 +1,13 @@
 server:
-  port: 9090
+  port: 9292
 
 spring:
   application:
-    name: customer-service
+    name: notification-service
   datasource:
-    password: password01!
-    username: fullstack
-    url: jdbc:postgresql://ms-postgres:5432/customer-svr-db
+    password: ms-password
+    username: ms-user
+    url: jdbc:postgresql://ms-postgres:5432/notification-svr-db
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -17,7 +17,14 @@ spring:
         format_sql: true
     show-sql: true
   rabbitmq:
+    exchanges:
+      internal: internal.exchange
+    queue:
+      notification: notification.queue
+    routing-keys:
+      internal-notification: internal.notification.routing-key
     addresses: rabbitmq:5672
+
 
 eureka:
   client:
@@ -48,3 +55,6 @@ management:
 logging:
   pattern:
     file: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+
+
