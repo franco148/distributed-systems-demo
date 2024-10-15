@@ -8,9 +8,9 @@ spec:
   replicas: 1
   template:
     metadata:
-      name: fraud
+      name: fraud-srv
       labels:
-        app: fraud
+        app: fraud-srv
     spec:
       containers:
         - name: fraud-srv
