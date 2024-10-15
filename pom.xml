@@ -124,7 +124,15 @@
           <version>3.4.3</version>
           <configuration>
             <from>
-              <image>eclipse-temurin:21</image>
+<!--              https://hub.docker.com/_/adoptopenjdk-->
+<!--              https://hub.docker.com/_/eclipse-temurin/-->
+              <image>eclipse-temurin:21-jdk</image>
+              <platforms>
+                <platform>
+                  <architecture>amd64</architecture>
+                  <os>linux</os>
+                </platform>
+              </platforms>
             </from>
             <to>
               <tags>
