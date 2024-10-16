@@ -13,6 +13,10 @@ services:
     networks:
       - ms-postgres-network
     restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U fullstack" ]
+      interval: 10s
+      retries: 5
 
 #  pgadmin:
 #    container_name: pgadmin
@@ -45,9 +49,11 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - ms-demo-network
 
   eureka-server:
-    image: franco148/microservice-demo-eureka-server:latest
+    image: franco148/microservice-demo-eureka-server:1.2-SNAPSHOT
     container_name: eureka-server
     ports:
       - "8761:8761"
@@ -59,7 +65,7 @@ services:
       - zipkin
 
   api-gateway:
-    image: franco148/microservice-demo-api-gateway-service:latest
+    image: franco148/microservice-demo-api-gateway-service:1.2-SNAPSHOT
     container_name: api-gateway
     ports:
       - "9393:9393"
@@ -72,7 +78,7 @@ services:
       - eureka-server
 
   customer-server:
-    image: franco148/microservice-demo-customer-service:latest
+    image: franco148/microservice-demo-customer-service:1.2-SNAPSHOT
     container_name: customer-server
     ports:
       - "9090:9090"
@@ -82,14 +88,19 @@ services:
       - ms-demo-network
       - ms-postgres-network
     depends_on:
-      - ms-db
-      - zipkin
-      - rabbitmq
-      - eureka-server
-      - api-gateway
+      ms-db:
+        condition: service_healthy
+      zipkin:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      eureka-server:
+        condition: service_started
+      api-gateway:
+        condition: service_started
 
   fraud-server:
-    image: franco148/microservice-demo-fraud-service:latest
+    image: franco148/microservice-demo-fraud-service:1.2-SNAPSHOT
     container_name: fraud-server
     ports:
       - "9191:9191"
@@ -99,14 +110,19 @@ services:
       - ms-demo-network
       - ms-postgres-network
     depends_on:
-      - ms-db
-      - zipkin
-      - rabbitmq
-      - eureka-server
-      - api-gateway
+      ms-db:
+        condition: service_healthy
+      zipkin:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      eureka-server:
+        condition: service_started
+      api-gateway:
+        condition: service_started
 
   notification-server:
-    image: franco148/microservice-demo-notification-service:latest
+    image: franco148/microservice-demo-notification-service:1.2-SNAPSHOT
     container_name: notification-server
     ports:
       - "9292:9292"
@@ -116,11 +132,16 @@ services:
       - ms-demo-network
       - ms-postgres-network
     depends_on:
-      - ms-db
-      - zipkin
-      - rabbitmq
-      - eureka-server
-      - api-gateway
+      ms-db:
+        condition: service_healthy
+      zipkin:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      eureka-server:
+        condition: service_started
+      api-gateway:
+        condition: service_started
 
 networks:
   ms-postgres-network:
