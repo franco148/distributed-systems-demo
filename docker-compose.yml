@@ -1,5 +1,5 @@
 services:
-  db:
+  ms-db:
     container_name: ms-postgres
     image: postgres:alpine
     environment:
@@ -7,11 +7,11 @@ services:
       POSTGRES_PASSWORD: password01!
       PGDATA: /data/postgres
     volumes:
-      - postgres:/data/ms-postgres
+      - ms-postgres:/data/postgres
     ports:
       - "15432:5432"
     networks:
-      - ms-postgres
+      - ms-postgres-network
     restart: unless-stopped
 
 #  pgadmin:
@@ -46,84 +46,84 @@ services:
       - "5672:5672"
       - "15672:15672"
 
-#  eureka-server:
-#    image: franco148/microservice-demo-eureka-server:latest
-#    container_name: eureka-server
-#    ports:
-#      - "8761:8761"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - ms-demo-network
-#    depends_on:
-#      - zipkin
-#
-#  api-gateway:
-#    image: franco148/microservice-demo-api-gateway-service:latest
-#    container_name: api-gateway
-#    ports:
-#      - "9393:9393"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - ms-demo-network
-#    depends_on:
-#      - zipkin
-#      - eureka-server
+  eureka-server:
+    image: franco148/microservice-demo-eureka-server:latest
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - ms-demo-network
+    depends_on:
+      - zipkin
 
-#  customer-server:
-#    image: franco148/microservice-demo-customer-service
-#    container_name: customer-server
-#    ports:
-#      - "9090:9090"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - ms-demo-network
-#      - postgres
-#    depends_on:
-#      - db
-#      - zipkin
-#      - rabbitmq
-#      - eureka-server
-#      - api-gateway
-#
-#  fraud-server:
-#    image: franco148/microservice-demo-fraud-service
-#    container_name: fraud-server
-#    ports:
-#      - "9191:9191"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - ms-demo-network
-#      - postgres
-#    depends_on:
-#      - db
-#      - zipkin
-#      - rabbitmq
-#      - eureka-server
-#      - api-gateway
-#
-#  notification-server:
-#    image: franco148/microservice-demo-notification-service
-#    container_name: notification-server
-#    ports:
-#      - "9292:9292"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - ms-demo-network
-#      - postgres
-#    depends_on:
-#      - db
-#      - zipkin
-#      - rabbitmq
-#      - eureka-server
-#      - api-gateway
+  api-gateway:
+    image: franco148/microservice-demo-api-gateway-service:latest
+    container_name: api-gateway
+    ports:
+      - "9393:9393"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - ms-demo-network
+    depends_on:
+      - zipkin
+      - eureka-server
+
+  customer-server:
+    image: franco148/microservice-demo-customer-service:latest
+    container_name: customer-server
+    ports:
+      - "9090:9090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - ms-demo-network
+      - ms-postgres-network
+    depends_on:
+      - ms-db
+      - zipkin
+      - rabbitmq
+      - eureka-server
+      - api-gateway
+
+  fraud-server:
+    image: franco148/microservice-demo-fraud-service:latest
+    container_name: fraud-server
+    ports:
+      - "9191:9191"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - ms-demo-network
+      - ms-postgres-network
+    depends_on:
+      - ms-db
+      - zipkin
+      - rabbitmq
+      - eureka-server
+      - api-gateway
+
+  notification-server:
+    image: franco148/microservice-demo-notification-service:latest
+    container_name: notification-server
+    ports:
+      - "9292:9292"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - ms-demo-network
+      - ms-postgres-network
+    depends_on:
+      - ms-db
+      - zipkin
+      - rabbitmq
+      - eureka-server
+      - api-gateway
 
 networks:
-  ms-postgres:
+  ms-postgres-network:
     driver: bridge
   ms-demo-network:
     driver: bridge

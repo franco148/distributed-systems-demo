@@ -7,6 +7,8 @@ Command: `mvn clean package -P <maven-profile>`
 
 Example: `mvn clean package -P build-docker-image`
 
+## Kubernetes
+- Check logs: `docker logs <container-name>`
 
 ## Kubernetes
 ##### Requited tools:

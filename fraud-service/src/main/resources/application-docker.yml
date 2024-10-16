@@ -7,7 +7,7 @@ spring:
   datasource:
     password: password01!
     username: fullstack
-    url: jdbc:postgresql://postgres:5432/fraud-svr-db
+    url: jdbc:postgresql://ms-db:15432/fraud-svr-db
   jpa:
     hibernate:
       ddl-auto: create-drop
