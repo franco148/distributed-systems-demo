@@ -7,8 +7,11 @@ Command: `mvn clean package -P <maven-profile>`
 
 Example: `mvn clean package -P build-docker-image`
 
-###### See docker container content
-- `docker exec <docker-container-name> cat /app/resources/application-docker.yml`
+###### Docker commands
+- See docker container content: `docker exec <docker-container-name> cat /app/resources/application-docker.yml`
+- See docker images: `docker images`
+- See docker container logs: `docker logs -f <container-id/docker-container-name>`
+- Remove images: `docker rmi <image-id>`
 
 ## Kubernetes
 - Check logs: `docker logs <container-name>`
