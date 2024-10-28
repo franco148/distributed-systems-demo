@@ -7,6 +7,9 @@ Command: `mvn clean package -P <maven-profile>`
 
 Example: `mvn clean package -P build-docker-image`
 
+###### See docker container content
+- `docker exec <docker-container-name> cat /app/resources/application-docker.yml`
+
 ## Kubernetes
 - Check logs: `docker logs <container-name>`
 
@@ -67,5 +70,12 @@ psql -U host -U username -d database
 \c databaseName
 create database dbName;
 select * from tableName;
+
+##### Intellij IDEA notes
+- In Program arguments: `--server.port=<port>` when we want to run a service in a different port
+
+
+##### Other notes
+- https://stackoverflow.com/questions/29670116/remove-duplicates-from-a-list-of-objects-based-on-property-in-java-8
 
 

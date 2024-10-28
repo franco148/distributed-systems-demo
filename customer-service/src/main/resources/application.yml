@@ -8,6 +8,7 @@ spring:
     password: password01!
     username: fullstack
     url: jdbc:postgresql://172.18.0.2:5432/customer-svr-db
+#    url: jdbc:postgresql://127.0.0.1:5432/customer-svr-db
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -25,7 +26,7 @@ eureka:
       defaultZone: http://localhost:8761/eureka
     fetch-registry: true
     register-with-eureka: true
-    enabled: false
+#    enabled: false # Before kubernetes
 
 management:
   endpoints:

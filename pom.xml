@@ -6,7 +6,7 @@
 
   <groupId>com.francofral</groupId>
   <artifactId>distributed-systems-demo</artifactId>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.3-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>distributed-systems-demo</name>
@@ -126,7 +126,8 @@
             <from>
 <!--              https://hub.docker.com/_/adoptopenjdk-->
 <!--              https://hub.docker.com/_/eclipse-temurin/-->
-              <image>eclipse-temurin:21-jdk</image>
+<!--              Base image 'eclipse-temurin:21-jdk' does not use a specific image digest - build may not be reproducible : Need the sha for fixing this -->
+              <image>eclipse-temurin:21-jdk@sha256:5ad4efff3364b06c61578b267138359bcba92acc20dfd533f35b75c709a6f10b</image>
               <platforms>
                 <platform>
                   <architecture>amd64</architecture>
