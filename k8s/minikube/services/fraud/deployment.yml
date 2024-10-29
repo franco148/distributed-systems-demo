@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fraud-srv
+  labels:
+    app: fraud-srv
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: fraud-srv
+      labels:
+        app: fraud-srv
+    spec:
+      containers:
+        - name: fraud-srv
+          image: franco148/microservice-demo-fraud-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9191
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: fraud-srv

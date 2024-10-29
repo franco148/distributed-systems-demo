@@ -5,10 +5,9 @@ spring:
   application:
     name: customer-service
   datasource:
-    password: password01!
-    username: fullstack
-    url: jdbc:postgresql://172.18.0.2:5432/customer-svr-db
-#    url: jdbc:postgresql://127.0.0.1:5432/customer-svr-db
+    password: ms-password
+    username: ms-user
+    url: jdbc:postgresql://ms-postgres:25432/customer-svr-db
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -18,15 +17,15 @@ spring:
         format_sql: true
     show-sql: true
   rabbitmq:
-    addresses: localhost:5672
+    addresses: rabbitmq:5672
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://eureka-server:8761/eureka
     fetch-registry: true
     register-with-eureka: true
-#    enabled: false # Before kubernetes
+    enabled: false
 
 management:
   endpoints:
@@ -44,7 +43,7 @@ management:
       probability: 1.0  # Sample all requests
   zipkin:
     tracing:
-      endpoint: http://localhost:9411/api/v2/spans
+      endpoint: http://zipkin:9411/api/v2/spans
 
 logging:
   pattern:

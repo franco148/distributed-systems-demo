@@ -7,9 +7,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+@PropertySources({
+    @PropertySource("classpath:clients-${spring.profiles.active}.properties")
+})
 public class FraudServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(FraudServiceApplication.class, args);

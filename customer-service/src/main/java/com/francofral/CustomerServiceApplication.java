@@ -8,12 +8,17 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 
 @SpringBootApplication(
     scanBasePackages = "com.francofral"
 )
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = "com.francofral.clients")
+@PropertySources({
+    @PropertySource("classpath:clients-${spring.profiles.active}.properties")
+})
 public class CustomerServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(CustomerServiceApplication.class, args);

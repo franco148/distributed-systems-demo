@@ -1,35 +1,39 @@
 services:
-  db:
-    container_name: postgres
+  ms-db:
+    container_name: ms-postgres
     image: postgres:alpine
     environment:
       POSTGRES_USER: fullstack
       POSTGRES_PASSWORD: password01!
       PGDATA: /data/postgres
     volumes:
-      - postgres:/data/postgres
+      - ms-postgres:/data/postgres
     ports:
-      - "5432:5432"
+      - "15432:5432"
     networks:
-      - postgres
+      - ms-postgres-network
     restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U fullstack" ]
+      interval: 10s
+      retries: 5
 
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-      - pgadmin:/var/lib/pgadmin
-    ports:
-      - "5050:80"
-    networks:
-      - postgres
-    depends_on:
-      - db
-    restart: unless-stopped
+#  pgadmin:
+#    container_name: pgadmin
+#    image: dpage/pgadmin4
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+#      PGADMIN_CONFIG_SERVER_MODE: 'False'
+#    volumes:
+#      - pgadmin:/var/lib/pgadmin
+#    ports:
+#      - "5050:80"
+#    networks:
+#      - postgres
+#    depends_on:
+#      - db
+#    restart: unless-stopped
 
   zipkin:
     image: openzipkin/zipkin
@@ -45,6 +49,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - ms-demo-network
 
   eureka-server:
     image: franco148/microservice-demo-eureka-server:latest
@@ -72,62 +78,77 @@ services:
       - eureka-server
 
   customer-server:
-    image: franco148/microservice-demo-customer-service
-    container_name: customer-server
+    image: franco148/microservice-demo-customer-service:latest
+    container_name: customer-service
     ports:
       - "9090:9090"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - ms-demo-network
-      - postgres
+      - ms-postgres-network
     depends_on:
-      - db
-      - zipkin
-      - rabbitmq
-      - eureka-server
-      - api-gateway
+      ms-db:
+        condition: service_healthy
+      zipkin:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      eureka-server:
+        condition: service_started
+      api-gateway:
+        condition: service_started
 
   fraud-server:
-    image: franco148/microservice-demo-fraud-service
-    container_name: fraud-server
+    image: franco148/microservice-demo-fraud-service:latest
+    container_name: fraud-service
     ports:
       - "9191:9191"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - ms-demo-network
-      - postgres
+      - ms-postgres-network
     depends_on:
-      - db
-      - zipkin
-      - rabbitmq
-      - eureka-server
-      - api-gateway
+      ms-db:
+        condition: service_healthy
+      zipkin:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      eureka-server:
+        condition: service_started
+      api-gateway:
+        condition: service_started
 
   notification-server:
-    image: franco148/microservice-demo-notification-service
-    container_name: notification-server
+    image: franco148/microservice-demo-notification-service:latest
+    container_name: notification-service
     ports:
       - "9292:9292"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - ms-demo-network
-      - postgres
+      - ms-postgres-network
     depends_on:
-      - db
-      - zipkin
-      - rabbitmq
-      - eureka-server
-      - api-gateway
+      ms-db:
+        condition: service_healthy
+      zipkin:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      eureka-server:
+        condition: service_started
+      api-gateway:
+        condition: service_started
 
 networks:
-  postgres:
+  ms-postgres-network:
     driver: bridge
   ms-demo-network:
     driver: bridge
 
 volumes:
-  postgres:
+  ms-postgres:
   pgadmin:
