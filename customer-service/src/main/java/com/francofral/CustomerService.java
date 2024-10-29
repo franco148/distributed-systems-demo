@@ -48,6 +48,6 @@ public record CustomerService(
                 customer.getEmail(),
                 String.format("Hi %s, welcome to FrancoFral demos...", customer.getFirstName())
         );
-        rabbitMQMessageProducer.publish(notificationRequest, "", "");
+        rabbitMQMessageProducer.publish(notificationRequest, "internal.exchange", "internal.notification.routing-key");
     }
 }
