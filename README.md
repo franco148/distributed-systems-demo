@@ -22,9 +22,10 @@ Example: `mvn clean package -P build-docker-image`
 
 ##### Requited commands:
 - Start a container with kubectl: `kubectl run <some-name> --image=<docker-image> --port=<app-port>`
-- Retrieve existing pods: `kubectl get pods`, `kubectl get nodes -v=10`
+- Retrieve existing pods: `kubectl get pods`, `kubectl get pods -w`, `kubectl get nodes -v=10`
+- Verify pod: `kubectl describe pod <podname>`
 - Access the application (v1): `kubectl port-forward pod/<pod-name> <host-port>:<pod-port>`
-- Delete pod: `kubectl delete pod <pod-name>`
+- Delete/Stop pod: `kubectl delete pod <pod-name>`, `kubectl delete pod <pod-name> --force`
 - Start all ymls: `kubectl apply -f boostrap/postgress`. Need to be located in the folder.
 - Check logs: `kubectl logs <pod-name>`, `kubectl logs <pod-name> -f`
 - SSH a pod: `minikube ssh`
