@@ -6,6 +6,6 @@ spec:
   selector:
     app: postgres
   ports:
-    - port: 25432
-      targetPort: 25432
+    - port: 5432
+      targetPort: 5432
   type: ClusterIP

@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: fraud-srv
+  name: fraud-service
 spec:
   selector:
-    app: fraud-srv
+    app: fraud-service
   ports:
     - port: 80
       targetPort: 9191
