@@ -8,6 +8,7 @@ Command: `mvn clean package -P <maven-profile>`
 Example: `mvn clean package -P build-docker-image`
 
 ###### Docker commands
+- [How to view the contents of docker images?](https://betterstack.com/community/questions/how-to-view-contents-of-docker-images/)
 - See docker container content: `docker exec <docker-container-name> cat /app/resources/application-docker.yml`
 - See docker images: `docker images`
 - See docker container logs: `docker logs -f <container-id/docker-container-name>`
@@ -22,17 +23,21 @@ Example: `mvn clean package -P build-docker-image`
 
 ##### Requited commands:
 - Start a container with kubectl: `kubectl run <some-name> --image=<docker-image> --port=<app-port>`
-- Retrieve existing pods: `kubectl get pods`, `kubectl get nodes -v=10`
+- Retrieve existing pods: `kubectl get pods`, `kubectl get pods -w`, `kubectl get nodes -v=10`
+- Verify pod: `kubectl describe pod <podname>`
 - Access the application (v1): `kubectl port-forward pod/<pod-name> <host-port>:<pod-port>`
-- Delete pod: `kubectl delete pod <pod-name>`
+- Delete/Stop pod: `kubectl delete pod <pod-name>`, `kubectl delete pod <pod-name> --force`
 - Start all ymls: `kubectl apply -f boostrap/postgress`. Need to be located in the folder.
 - Check logs: `kubectl logs <pod-name>`, `kubectl logs <pod-name> -f`
 - SSH a pod: `minikube ssh`
-- In case we need to connect to a postgres pod: `kubectl exec -it <pod-name> -- psql -U <username>`. Then we can create more databases.
+- In case we need to connect to a postgres pod: `kubectl exec -it <pod-name> -- psql -U <username> -d <databasename>`. Then we can create more databases.
 - For enabling pod url instead of the load balancer: `minikube tunnel`
 - Retrieve services: `kubectl get svc`
 - Update replicas: `kubectl scale --replicas=0 deployment customer`
 - Access to LoadBalancer: `minikube tunnel`
+- Stop minikube: `minikube stop`
+- Delete minikube: `sudo minikube delete`
+- Start minikube: `minikube start`
 
 Use the following commands to access both RabbitMQ and Zipkin
 - minikube service --url rabbitmq
