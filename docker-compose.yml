@@ -53,7 +53,7 @@ services:
       - ms-demo-network
 
   eureka-server:
-    image: franco148/microservice-demo-eureka-server:latest
+    image: franco148/microservice-demo-eureka-server:1.6-RC3
     container_name: eureka-server
     ports:
       - "8761:8761"
@@ -65,7 +65,7 @@ services:
       - zipkin
 
   api-gateway:
-    image: franco148/microservice-demo-api-gateway-service:latest
+    image: franco148/microservice-demo-api-gateway-service:1.6-RC3
     container_name: api-gateway
     ports:
       - "9393:9393"
@@ -78,7 +78,7 @@ services:
       - eureka-server
 
   customer-server:
-    image: franco148/microservice-demo-customer-service:latest
+    image: franco148/microservice-demo-customer-service:1.6-RC3
     container_name: customer-service
     ports:
       - "9090:9090"
@@ -100,7 +100,7 @@ services:
         condition: service_started
 
   fraud-server:
-    image: franco148/microservice-demo-fraud-service:latest
+    image: franco148/microservice-demo-fraud-service:1.6-RC3
     container_name: fraud-service
     ports:
       - "9191:9191"
@@ -122,7 +122,7 @@ services:
         condition: service_started
 
   notification-server:
-    image: franco148/microservice-demo-notification-service:latest
+    image: franco148/microservice-demo-notification-service:1.6-RC3
     container_name: notification-service
     ports:
       - "9292:9292"
