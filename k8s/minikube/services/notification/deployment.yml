@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: notification-service
-          image: franco148/microservice-demo-notification-service:latest
+          image: franco148/microservice-demo-notification-service:2.1-K8S
           imagePullPolicy: Always
           ports:
             - containerPort: 9292

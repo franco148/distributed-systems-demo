@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: fraud-srv
-          image: franco148/microservice-demo-fraud-service:latest
+          image: franco148/microservice-demo-fraud-service:2.1-K8S
           imagePullPolicy: Always
           ports:
             - containerPort: 9191

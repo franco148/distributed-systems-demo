@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: customer-srv
-          image: franco148/microservice-demo-customer-service:latest
+          image: franco148/microservice-demo-customer-service:2.1-K8S
           imagePullPolicy: Always
           ports:
             - containerPort: 9090
