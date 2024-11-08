@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: customer-srv
+  name: customer-service
   labels:
-    app: customer-srv
+    app: customer-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: customer-srv
+      app: customer-service
   template:
     metadata:
-      name: customer-srv
+      name: customer-service
       labels:
-        app: customer-srv
+        app: customer-service
     spec:
       containers:
         - name: customer-srv
-          image: franco148/microservice-demo-customer-service:latest
+          image: franco148/microservice-demo-customer-service:2.1-K8S
           imagePullPolicy: Always
           ports:
             - containerPort: 9090

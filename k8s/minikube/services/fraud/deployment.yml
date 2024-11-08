@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fraud-srv
+  name: fraud-service
   labels:
-    app: fraud-srv
+    app: fraud-service
 spec:
   replicas: 1
   template:
     metadata:
-      name: fraud-srv
+      name: fraud-service
       labels:
-        app: fraud-srv
+        app: fraud-service
     spec:
       containers:
         - name: fraud-srv
-          image: franco148/microservice-demo-fraud-service:latest
+          image: franco148/microservice-demo-fraud-service:2.1-K8S
           imagePullPolicy: Always
           ports:
             - containerPort: 9191
@@ -24,4 +24,4 @@ spec:
       restartPolicy: Always
   selector:
     matchLabels:
-      app: fraud-srv
+      app: fraud-service
